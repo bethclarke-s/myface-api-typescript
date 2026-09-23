@@ -49,7 +49,7 @@ function Users() {
         if (userList === undefined) return <p> Loading users...</p>
         let users = [];
         for (const user of userList.results) {
-            users.push(<li key={user.id}> {user.name} </li>)
+            users.push(<li key={user.id}> <Link to={`/users/${user.username}`}> {user.name} </Link> </li>)
         }
         return <>
         <ol>

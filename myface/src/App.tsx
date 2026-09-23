@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import Users from './Users.tsx'
 import Posts from './Posts.tsx'
 import './App.css'
+import UserDetails from './UserDetails.tsx';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/posts" replace />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/users/:username" element={<UserDetails />} />
         <Route path="/posts" element={<Posts />} />
       </Routes>
     </BrowserRouter>        
