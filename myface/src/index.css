@@ -112,11 +112,14 @@ h3 {
 
 h1 {
   font-size: 56px;
+  /* :root's `145%` line-height inherits as a fixed 26px, which crops big
+     headings — headings set their own unitless value instead. */
+  line-height: 1.15;
   letter-spacing: -1.68px;
-  margin: 32px 0;
+  margin: 44px 0 32px;
   @media (max-width: 1024px) {
     font-size: 36px;
-    margin: 20px 0;
+    margin: 28px 0 20px;
   }
 }
 h2 {
@@ -155,7 +158,13 @@ code {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin: 28px 0 8px;
+  margin: 44px 0 12px;
+  /* gradient-clipped text has no glyph overflow allowance of its own */
+  padding-block: 4px;
+
+  @media (max-width: 1024px) {
+    margin: 28px 0 10px;
+  }
 }
 
 .page-title span {
