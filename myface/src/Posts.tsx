@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link, useSearchParams } from 'react-router-dom';
 
 function Posts() {
 
@@ -28,44 +29,41 @@ function Posts() {
 
    
     const [postList, setPostList] = useState<Page<PostModel>>();
-    
+    const [searchParams] = useSearchParams();
+
     function updatePostList(data: Page<PostModel>){
         setPostList(data);
-        console.log(data);
     }
 
     useEffect(() => {
-        fetch("http://localhost:3001/posts").then(response => response.json()).then(data => updatePostList(data));
-    },[])
+        let cancelled = false;
+        const api_url = `http://localhost:3001/posts?${searchParams}`;
+        console.log(searchParams)
+        console.log(api_url)
+        fetch(api_url)
+            .then(response => response.json())    
+            .then(data => { if (!cancelled) updatePostList(data)});
+        return () => { cancelled = true };
+    },[searchParams.toString()])
     
     function returnNumberOfLikesandDislikesHtml(post: PostModel){
-
-        let text = [];
-
-        if (post.likedBy.length === 1) {
-            text.push(<p> Liked by {post.likedBy[0].name}. </p>);
-        } else if (post.likedBy.length > 1) {
-             text.push(<p> Liked by {post.likedBy[0].name} and {post.likedBy.length - 1} others. </p>);
-        }
-
-        if (post.dislikedBy.length === 1) {
-            text.push(<p> Disliked by {post.dislikedBy[0].name}. </p>);
-        } else if (post.dislikedBy.length > 1) {
-             text.push(<p> Disliked by {post.dislikedBy[0].name} and {post.dislikedBy.length - 1} others. </p>);
-        }
-
-        return text        
+        return <>
+        {post.likedBy.length === 1 && <p> Liked by {post.likedBy[0].name}. </p>};
+        {post.likedBy.length > 1 && <p> Liked by {post.likedBy[0].name} and {post.likedBy.length - 1} others. </p>}
+        {post.dislikedBy.length === 1 && <p> Disliked by {post.dislikedBy[0].name}. </p>}
+        {post.dislikedBy.length > 1 && <p> Disliked by {post.dislikedBy[0].name} and {post.dislikedBy.length - 1} others. </p>}
+        </>;
     }
 
     function generateEachPost(post: PostModel) {
-        return <>
+        return (
             <li key={post.id}>
                 <p>New post from user {post.postedBy.username} - {new Date(post.createdAt).toLocaleString("en-GB")}</p>
                 <p>{post.message}</p>
                 <img src={post.imageUrl}/>
                 {returnNumberOfLikesandDislikesHtml(post)}
             </li>
-        </>
+        );
     }
 
     function generatePosts(){
@@ -85,8 +83,9 @@ function Posts() {
     <h1>Posts</h1>
     
     {generatePosts()}
-    {postList?.previous && <a href={postList.previous}>Previous page</a>}
-    {postList?.next && <a href={postList.next}>Next page</a>}
+    {postList?.previous && <Link to={postList.previous} >Previous page</Link>}
+
+    {postList?.next && <Link to={postList.next}>Next page</Link>}
     </>
 }
 
