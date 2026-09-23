@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, NavLink, Navigate } from 'react-router-dom';
 import Users from './Users.tsx'
 import Posts from './Posts.tsx'
 import './App.css'
@@ -10,9 +10,13 @@ function App() {
   return (
     <>
     <BrowserRouter>
-      <nav>
-        <Link to="/users">Users</Link> {" "} | {" "}
-        <Link to="/posts">Posts</Link>
+      <nav className="site-nav">
+        <Link className="brand" to="/posts">
+          <span className="logo">😎</span>
+          <span className="wordmark">MyFace</span>
+        </Link>
+        <NavLink className="nav-link" to="/users">Users</NavLink>
+        <NavLink className="nav-link" to="/posts">Posts</NavLink>
       </nav>
       <Routes>
         <Route path="/" element={<Navigate to="/posts" replace />} />

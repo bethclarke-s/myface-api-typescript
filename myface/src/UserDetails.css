@@ -1,0 +1,253 @@
+.profile {
+  max-width: 720px;
+  width: 100%;
+  margin: 24px auto 0;
+  overflow: hidden;
+  padding: 0;
+  animation: rise-in 0.5s both cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+.profile-cover {
+  position: relative;
+  z-index: 0;
+  height: 220px;
+  background: var(--gradient);
+  background-size: 200% auto;
+  animation: slide-gradient 8s linear infinite;
+}
+
+.profile-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* fade the cover into the card body */
+.profile-cover::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 70%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent);
+  pointer-events: none;
+}
+
+.profile-head {
+  /* sits above the cover photo, not behind it */
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  padding: 0 28px;
+  margin-top: -54px;
+}
+
+.profile-avatar-ring {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  padding: 4px;
+  border-radius: 50%;
+  background: var(--gradient);
+  background-size: 200% auto;
+  box-shadow: var(--shadow-lift);
+  animation: slide-gradient 6s linear infinite;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.profile-avatar-ring:hover {
+  transform: scale(1.05) rotate(-4deg);
+}
+
+.profile-avatar {
+  display: block;
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--surface-solid);
+  border: 4px solid var(--surface-solid);
+}
+
+.profile-names {
+  padding-bottom: 12px;
+  min-width: 0;
+}
+
+.profile-names h1 {
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: -0.8px;
+  line-height: 1.1;
+}
+
+.profile-names .wave {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: wave 2.4s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%,
+  60%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10%,
+  30% {
+    transform: rotate(14deg);
+  }
+  20%,
+  40% {
+    transform: rotate(-8deg);
+  }
+}
+
+.profile-names .handle {
+  margin-top: 4px;
+  font-size: 16px;
+  color: var(--text-soft);
+}
+
+.profile-stats {
+  display: flex;
+  gap: 10px;
+  padding: 22px 28px 0;
+}
+
+.stat {
+  flex: 1;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--gradient-soft);
+  border: 1px solid var(--border);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stat:hover {
+  transform: translateY(-3px);
+}
+
+.stat .value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-h);
+  line-height: 1.1;
+}
+
+.stat .label {
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.profile-contact {
+  padding: 24px 28px 28px;
+}
+
+.profile-contact h2 {
+  font-size: 18px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 12px;
+}
+
+.contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  font-size: 16px;
+  color: var(--text-h);
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.contact-list li:hover {
+  transform: translateX(4px);
+  border-color: var(--accent-border);
+}
+
+.contact-list .key {
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  min-width: 78px;
+}
+
+.contact-list .value {
+  word-break: break-all;
+}
+
+.back-link {
+  display: inline-flex;
+  align-self: center;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--accent);
+  transition: gap 0.2s ease;
+}
+
+.back-link:hover {
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .profile-cover {
+    height: 150px;
+  }
+  .profile-head {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-inline: 18px;
+  }
+  .profile-avatar {
+    width: 96px;
+    height: 96px;
+  }
+  .profile-names h1 {
+    font-size: 26px;
+  }
+  .profile-stats {
+    padding-inline: 18px;
+  }
+  .stat .value {
+    font-size: 20px;
+  }
+  .profile-contact {
+    padding-inline: 18px;
+  }
+  .contact-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}

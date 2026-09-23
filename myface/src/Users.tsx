@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type CSSProperties } from "react";
 import { Link, useSearchParams } from 'react-router-dom';
 import type { UserModel } from '../../src/models/api/userModel.ts';
 import type { Page } from '../../src/models/api/page.ts';
+import './Users.css';
 
 function Users() {
 
@@ -22,25 +23,39 @@ function Users() {
     },[searchParams.toString()])
 
     function generateListOfUsers() {
-        if (userList === undefined) return <p> Loading users...</p>
+        if (userList === undefined) return <p className="loading"> Loading users...</p>
         let users = [];
-        for (const user of userList.results) {
-            users.push(<li key={user.id}> <Link to={`/users/${user.id}`}> {user.name} </Link> </li>)
+        for (const [index, user] of userList.results.entries()) {
+            users.push(
+                <li key={user.id} className="user-card card" style={{ "--i": index } as CSSProperties}>
+                    <Link to={`/users/${user.id}`}>
+                        <span className="avatar-ring">
+                            <img className="avatar" src={user.profileImageUrl} alt="" />
+                        </span>
+                        <span className="user-name">{user.name}</span>
+                        <span className="user-handle">@{user.username}</span>
+                        <span className="view-profile">View profile →</span>
+                    </Link>
+                </li>
+            )
         }
         return <>
-        <ol>
+        <ol className="user-grid">
             {users}
-        </ol>   
+        </ol>
         </>
     };
 
-    
-    return <>
-    <h1>Users</h1>
+
+    return <div className="page">
+    <h1 className="page-title"><span>Users</span> 👋</h1>
+    <p className="page-subtitle">{userList?.total ?? 0} lovely people on MyFace</p>
     {generateListOfUsers()}
-    {userList?.previous && <Link to={userList.previous} >Previous page</Link>}
-    {userList?.next && <Link to={userList.next}>Next page</Link>}
-    </>
+    <div className="pager">
+        {userList?.previous && <Link className="prev" to={userList.previous} >← Previous page</Link>}
+        {userList?.next && <Link className="next" to={userList.next}>Next page →</Link>}
+    </div>
+    </div>
 }
 
 export default Users;

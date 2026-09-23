@@ -1,0 +1,131 @@
+.user-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.user-card {
+  /* staggered fade-in, one step per card */
+  animation: pop-in 0.45s both cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+}
+
+.user-card a {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 28px 18px 24px;
+  height: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: var(--text-h);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+/* gradient wash that fades up on hover */
+.user-card a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-soft);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.user-card a:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--accent-border);
+}
+
+.user-card a:hover::before {
+  opacity: 1;
+}
+
+.user-card a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.user-card .avatar-ring {
+  position: relative;
+  padding: 3px;
+  border-radius: 50%;
+  background: var(--gradient);
+  background-size: 200% auto;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.user-card a:hover .avatar-ring {
+  transform: scale(1.06) rotate(-3deg);
+  animation: slide-gradient 3s linear infinite;
+}
+
+.user-card .avatar {
+  display: block;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--surface-solid);
+  border: 3px solid var(--surface-solid);
+}
+
+.user-card .user-name {
+  position: relative;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.user-card .user-handle {
+  position: relative;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.user-card .view-profile {
+  position: relative;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.user-card a:hover .view-profile,
+.user-card a:focus-visible .view-profile {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .user-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  .user-card .avatar {
+    width: 64px;
+    height: 64px;
+  }
+}
