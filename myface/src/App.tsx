@@ -6,8 +6,6 @@ import './App.css'
 
 function App() {
 
-  // fetch("http://localhost:3001/posts").then(response => response.json()).then(data => console.log(data));
-
   return (
     <>
     <BrowserRouter>
