@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/posts" replace />} />
         <Route path="/users" element={<Users />} />
-        <Route path="/users/:username" element={<UserDetails />} />
+        <Route path="/users/:id" element={<UserDetails />} />
         <Route path="/posts" element={<Posts />} />
       </Routes>
     </BrowserRouter>        

@@ -1,33 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from 'react-router-dom';
+import type { UserModel } from '../../src/models/api/userModel.ts';
+import type { Page } from '../../src/models/api/page.ts';
 
 function Users() {
-
-    interface UserPostModel {
-        id: number;
-        message: string;
-        imageUrl: string;
-        createdAt: Date;
-    }
-
-    interface UserModel {
-        id: number;
-        name: string;
-        username: string;
-        profileImageUrl: string;
-        coverImageUrl: string;
-        email: string;
-        posts: UserPostModel[];
-        likes: UserPostModel[];
-        dislikes: UserPostModel[];
-    }
-
-    interface Page<T> {
-        results: T[];
-        previous: string | null;
-        next: string | null;
-        total: number;
-    }
 
     const [userList, setUserList] = useState<Page<UserModel>>();
     const [searchParams] = useSearchParams();
@@ -49,7 +25,7 @@ function Users() {
         if (userList === undefined) return <p> Loading users...</p>
         let users = [];
         for (const user of userList.results) {
-            users.push(<li key={user.id}> <Link to={`/users/${user.username}`}> {user.name} </Link> </li>)
+            users.push(<li key={user.id}> <Link to={`/users/${user.id}`}> {user.name} </Link> </li>)
         }
         return <>
         <ol>

@@ -1,32 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from 'react-router-dom';
+import type { PostModel } from '../../src/models/api/postModel.ts';
+import type { Page } from '../../src/models/api/page.ts';
 
 function Posts() {
-
-    interface PostUserModel {
-        id: number;
-        name: string;
-        username: string;
-        email: string;
-    }
-
-    interface PostModel {
-        id: number;
-        message: string;
-        imageUrl: string;
-        createdAt: string;
-        postedBy: PostUserModel;
-        likedBy: PostUserModel[];
-        dislikedBy: PostUserModel[];
-    }
-
-    interface Page<T> {
-        results: T[];
-        previous: string | null;
-        next: string | null;
-        total: number;
-    }
-
    
     const [postList, setPostList] = useState<Page<PostModel>>();
     const [searchParams] = useSearchParams();
@@ -48,7 +25,7 @@ function Posts() {
     
     function returnNumberOfLikesandDislikesHtml(post: PostModel){
         return <>
-        {post.likedBy.length === 1 && <p> Liked by {post.likedBy[0].name}. </p>};
+        {post.likedBy.length === 1 && <p> Liked by {post.likedBy[0].name}. </p>}
         {post.likedBy.length > 1 && <p> Liked by {post.likedBy[0].name} and {post.likedBy.length - 1} others. </p>}
         {post.dislikedBy.length === 1 && <p> Disliked by {post.dislikedBy[0].name}. </p>}
         {post.dislikedBy.length > 1 && <p> Disliked by {post.dislikedBy[0].name} and {post.dislikedBy.length - 1} others. </p>}
